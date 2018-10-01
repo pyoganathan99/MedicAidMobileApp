@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script src="js/anime.js"></script>
+
+    <style>
+        body {
+            background: #353535;
+        }
+
+        .bar {
+            width: 6px;
+            height: 6px;
+            background: #ffffff44;
+            border-radius: 3px;
+            animation: none;
+            animation-duration: 1.5s;
+            animation-iteration-count: infinite;
+            position: relative;
+        }
+
+        .circle {
+            position: absolute;
+            top: 50%;
+            left: 50vw;
+            transform: translate(-50%, -50%);
+            width: 64px;
+            height: 64px;
+            border-radius: 32px;
+            border: solid #00acc1 2px;
+            box-shadow: 0 0 1px 1px #00acc1, inset 0 0 1px 1px #00acc1;
+            animation: none;
+            animation-duration: 1.5s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in;
+            background: #00000038;
+        }
+
+        .top {
+            padding: 24px;
+            text-align: center;
+            border-bottom: solid #00acc1 2px;
+            box-shadow: 0px 0px 1px 1px #00acc1;
+            background: #00000044;
+        }
+
+        @keyframes mic {
+            0% {
+                box-shadow: 0 0 1px 1px #00acc1, inset 0 0 1px 1px #00acc1;
+            }
+
+            50% {
+                box-shadow: 0 0 20px 4px #00acc1, inset 0 0 1px 1px #00acc1;
+            }
+
+            100% {
+                box-shadow: 0 0 1px 1px #00acc1, inset 0 0 1px 1px #00acc1;
+            }
+        }
+
+
+        @keyframes bar-animation {
+            0% {
+                height: 6px;
+                top: 0px;
+            }
+
+            25% {
+                height: 6px;
+                top: 0px;
+            }
+
+            50% {
+                height: 48px;
+                top: -21px;
+            }
+
+            75% {
+                height: 6px;
+                top: 0px;
+            }
+
+            100% {
+                height: 6px;
+                top: 0px;
+            }
+        }
+
+        @keyframes bar-animation-disabled {
+            0% {
+                height: 6px;
+                top: 0px;
+            }
+
+            100% {
+                height: 6px;
+                top: 0px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top">
+        <span class="white-text" style="font-family:'Montserrat', sans-serif; font-size: 24px;">Medic Aid</span>
+    </div>
+    <div style="position:absolute;top:64px;bottom:0;left:0;right:0">
+        <div style="position: relative;z-index:0;display:flex;top:50%;transform:translate(0,-6px);">
+            <div class="bar" style="transform:translate(6.25vw,0) translate(-50%,0);animation-delay:800ms;"></div>
+            <div class="bar" style="transform:translate(12.5vw,0) translate(-50%,0);animation-delay:600ms;"></div>
+            <div class="bar" style="transform:translate(18.75vw,0) translate(-50%,0);animation-delay:400ms;"></div>
+            <div class="bar" style="transform:translate(25vw,0) translate(-50%,0);animation-delay:200ms;"></div>
+            <div class="bar" style="transform:translate(31.25vw,0) translate(-50%,0);animation-delay: 0ms;"></div>
+
+            <div class="bar" style="transform:translate(56.25vw,0) translate(-50%,0);animation-delay:0ms;"></div>
+            <div class="bar" style="transform:translate(62.5vw,0) translate(-50%,0);animation-delay: 200ms;"></div>
+            <div class="bar" style="transform:translate(68.75vw,0) translate(-50%,0);animation-delay:400ms ;"></div>
+            <div class="bar" style="transform:translate(75vw,0) translate(-50%,0);animation-delay: 600ms;"></div>
+            <div class="bar" style="transform:translate(81.25vw,0) translate(-50%,0);animation-delay: 800ms;"></div>
+        </div>
+        <div id="listen" style="position:absolute;top:22vh;left:0;right:0;text-align: center;font-size: 28px;font-weight: 300;color:#eeeeeeee;">Listening...</div>
+        <div id='circle' class="circle" onclick="listenClick();">
+
+        </div>
+        <div style="position:absolute;top:50%;left:50vw;transform:translate(-50%,-50%);" onclick="listenClick();">
+            <i class="material-icons white-text" style="font-size:36px;line-height: 3;">mic</i>
+        </div>
+
+        <div id="content" style="position:absolute;top:62vh;left:0;right:0;text-align: center;font-size: 22px;font-weight: 400;color:#eeeeeeee;">Listening...</div>
+    </div>
+
+    <!-- <div style="position:absolute;top:86px;bottom:0;left:0;right:0">
+
+        <div class="z-depth-3 white-text" style="background:#00000038;margin:24px;padding:12px;margin-bottom:0;border-left: solid #ef5350 3px;border-radius: 2px;">
+            <span style="vertical-align:middle;">Please consult a doctor as soon as possible</span>
+        </div>
+
+    </div> -->
+
+    <script>
+
+        var listening = false;
+
+        function listenClick() {
+
+            listening = !listening;
+
+            if (listening) {
+                document.getElementById('circle').style.animationName = "mic";
+                document.querySelectorAll('.bar').forEach(elt => elt.style.animationName = "bar-animation");
+
+                anime({
+                    targets: "#listen",
+                    opacity: [0, 0.8],
+                    easing: 'easeOutExpo',
+                    top: ["24vh", "22vh"]
+                })
+
+                
+
+            } else {
+                document.getElementById('circle').style.animationName = "none";
+                document.querySelectorAll('.bar').forEach(elt => elt.style.animationName = "none");
+
+                anime({
+                    targets: "#listen",
+                    opacity: [0.8, 0],
+                    easing: 'easeOutExpo',
+                    top: ["22vh", "20vh"]
+                })
+            }
+
+        }
+
+    </script>
+</body>
+
+</html>
