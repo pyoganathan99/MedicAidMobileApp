@@ -139,6 +139,7 @@ recognition.onresult = function (event) {
 
 	// append transcript to cached input value
 	inputEl.value = prefix + transcript;
+	document.getElementsByClassName('output')[0].innerHTML=prefix+transcript;
 
 	// set cursur and scroll to end
 	inputEl.focus();
