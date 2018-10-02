@@ -72,6 +72,8 @@ recognition.onstart = function () {
 
 recognition.onend = function () {
 
+	stopAnimation();
+
 	recognizing = false;
 	clearTimeout(timeout);
 
@@ -113,8 +115,6 @@ function buttonClick() {
 
 	// stop and exit if already going
 	if (recognizing) {
-
-		stopAnimation();
 
 		recognition.stop();
 		return;
