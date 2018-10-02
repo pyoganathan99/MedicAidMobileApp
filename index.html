@@ -12,7 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <script src="js/anime.js"></script>
+    <script src="anime/anime.js"></script>
 
     <style>
         body {
@@ -148,18 +148,16 @@
             <div class="bar" style="transform:translate(93.75vw,0) translate(-50%,0);animation-delay:1400ms;"></div>
         </div>
         <div id="listen" style="position:absolute;top:22vh;left:0;right:0;text-align: center;font-size: 2em;font-weight: 300;color:#eeeeeeee;opacity: 0;">Listening...</div>
-        <div id='circle' class="circle" onclick="listenClick();">
+        <div id='circle' class="circle" onclick="buttonClick();">
 
         </div>
-        <div style="position:absolute;top:50%;left:50vw;transform:translate(-50%,-50%);" onclick="listenClick();">
+        <div style="position:absolute;top:50%;left:50vw;transform:translate(-50%,-50%);" onclick="buttonClick();">
             <i class="material-icons white-text" style="font-size:36px;line-height: 3;">mic</i>
         </div>
 
 
-        <input type="text" class="output speech-input" lang="ta-IN" data-ready="Habla ahora" value="adf"
-            disabled hidden>
 
-        <div type="text" id="output" class="output">adf</div>
+        <div type="text" id="output" class="output"></div>
     </div>
 
     <!-- <div style="position:absolute;top:86px;bottom:0;left:0;right:0">
@@ -171,54 +169,6 @@
     </div> -->
 
     <script>
-
-        var listening = false;
-
-        function stopListening() {
-            listening = false;
-            document.getElementById('circle').style.animationName = "none";
-            document.querySelectorAll('.bar').forEach(elt => elt.style.animationName = "none");
-
-            anime({
-                targets: "#listen",
-                opacity: [0.8, 0],
-                easing: 'easeOutExpo',
-                top: ["18vh", "16vh"]
-            })
-        }
-
-        function listenClick() {
-
-            trigger();
-
-            listening = !listening;
-
-            if (listening) {
-                document.getElementById('circle').style.animationName = "mic";
-                document.querySelectorAll('.bar').forEach(elt => elt.style.animationName = "bar-animation");
-
-                anime({
-                    targets: "#listen",
-                    opacity: [0, 0.8],
-                    easing: 'easeOutExpo',
-                    top: ["20vh", "18vh"]
-                })
-
-
-
-            } else {
-                document.getElementById('circle').style.animationName = "none";
-                document.querySelectorAll('.bar').forEach(elt => elt.style.animationName = "none");
-
-                anime({
-                    targets: "#listen",
-                    opacity: [0.8, 0],
-                    easing: 'easeOutExpo',
-                    top: ["18vh", "16vh"]
-                })
-            }
-
-        }
 
     </script>
 </body>
