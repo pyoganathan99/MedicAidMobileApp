@@ -98,7 +98,11 @@ recognition.onend = function () {
 	recognizing = false;
 	clearTimeout(timeout);
 	//micBtn.classList.remove('listening');
-	if (oldPlaceholder !== null) inputEl.placeholder = oldPlaceholder;
+	if (oldPlaceholder !== null){
+		inputEl.placeholder = oldPlaceholder;
+		document.getElementById('output').innerHTML="";
+	}
+	
 
 	stopListening();
 
@@ -139,7 +143,7 @@ recognition.onresult = function (event) {
 
 	// append transcript to cached input value
 	inputEl.value = prefix + transcript;
-	document.getElementsByClassName('output')[0].innerHTML=prefix+transcript;
+	document.getElementById('output').innerHTML=prefix+transcript;
 
 	// set cursur and scroll to end
 	inputEl.focus();
