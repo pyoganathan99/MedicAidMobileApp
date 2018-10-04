@@ -54,6 +54,12 @@
             background: #00000044;
         }
 
+        .warning{
+            background: #00000055;
+            border-left: solid #f44336;
+            padding:16px;
+        }
+
         @keyframes mic {
             0% {
                 box-shadow: 0 0 1px 1px #00acc1, inset 0 0 1px 1px #00acc1;
@@ -125,9 +131,16 @@
 
 <body>
     <div class="top">
-        <span class="white-text" style="font-family:'Montserrat', sans-serif; font-size: 24px;">Medic Aid</span>
+        <span class="white-text" style="font-family:'Montserrat', sans-serif; font-size: 24px;">மருத்துவ உதவி</span>
     </div>
-    <div style="position:absolute;top:64px;bottom:0;left:0;right:0">
+
+
+
+    <div id="page2" style="position:absolute;top:86px;bottom:0;left:0;right:0;padding:36px;" class="white-text">
+
+    </div>
+
+    <div id="page1" style="position:absolute;top:64px;bottom:0;left:0;right:0">
         <div style="position: relative;z-index:0;display:flex;top:50%;transform:translate(0,-6px);">
             <div class="bar" style="transform:translate(6.25vw,0) translate(-50%,0);animation-delay:1400ms;"></div>
             <div class="bar" style="transform:translate(12.5vw,0) translate(-50%,0);animation-delay:1200ms;"></div>
@@ -147,7 +160,7 @@
             <div class="bar" style="transform:translate(87.5vw,0) translate(-50%,0);animation-delay:1200ms;"></div>
             <div class="bar" style="transform:translate(93.75vw,0) translate(-50%,0);animation-delay:1400ms;"></div>
         </div>
-        <div id="listen" style="position:absolute;top:22vh;left:0;right:0;text-align: center;font-size: 2em;font-weight: 300;color:#eeeeeeee;opacity: 0;">Listening...</div>
+        <div id="listen" style="position:absolute;top:22vh;left:0;right:0;text-align: center;font-size: 2em;font-weight: 300;color:#eeeeeeee;opacity: 0;">பேசுங்கள்...</div>
         <div id='circle' class="circle" onclick="buttonClick();">
 
         </div>
@@ -170,10 +183,52 @@
 
     <script>
 
+        function showResult() {
+
+            var string = document.getElementById('output').innerHTML;
+
+            if (string != "") {
+
+                var res = net.run(bow(string, dictionary));
+
+                var diseaseName = diseases[likely(res)];
+                var disease = diseaseDescription[diseaseName];
+
+                var opStr="";
+
+                opStr += "<h4>"+diseaseName+"</h4>";
+
+                if(disease.doctorWarning){
+                    opStr+="<div class='warning'>ஒரு மருத்துவரை அணுகவும்</div>"
+                }
+
+                for(var key in disease.content){
+                    opStr+="<h5>"+key+"</h5>";
+                    opStr+="<span>"+disease.content[key]+"</span>";
+                }
+
+                document.getElementById('page2').innerHTML=opStr;
+
+                anime({
+                    targets: "#page1",
+                    opacity: [1, 0],
+                })
+
+                anime({
+                    targets: "#page2",
+                    opacity: [0, 1],
+                })
+            }
+        }
+
     </script>
 </body>
 
-
+<script src="js/lodash.js"></script>
+<script src="js/mimir.js"></script>
+<script src="js/brain.js"></script>
+<script src="js/data.js"></script>
 <script src="js/speech-input.js"></script>
+<script src="js/index.js"></script>
 
 </html>

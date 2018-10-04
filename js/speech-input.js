@@ -77,6 +77,8 @@ recognition.onend = function () {
 	recognizing = false;
 	clearTimeout(timeout);
 
+	showResult();
+
 };
 
 recognition.onresult = function (event) {
